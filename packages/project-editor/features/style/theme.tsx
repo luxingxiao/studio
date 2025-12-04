@@ -21,7 +21,8 @@ import {
     ProjectStore,
     IContextMenuContext,
     getProjectStore,
-    createObject
+    createObject,
+    LayoutModels
 } from "project-editor/store";
 import { replaceObjectReference } from "project-editor/core/search";
 
@@ -300,6 +301,7 @@ export const ThemesSideView = observer(
                 <FlexLayoutContainer
                     model={this.context.layoutModels.themes}
                     factory={this.factory}
+                    onRenderTab={LayoutModels.translateTabName}
                 />
             );
         }

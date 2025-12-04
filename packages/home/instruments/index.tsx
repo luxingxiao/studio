@@ -20,6 +20,7 @@ import { instruments, InstrumentObject } from "instrument/instrument-object";
 
 import { stringCompare } from "eez-studio-shared/string";
 import { beginTransaction, commitTransaction } from "eez-studio-shared/store";
+import { useTranslation, t as translate } from "eez-studio-shared/i18n";
 
 import type { ITabDefinition } from "home/tabs-store";
 
@@ -115,7 +116,7 @@ export class InstrumentsStore {
 
             menu.append(
                 new MenuItem({
-                    label: "Install Extension",
+                    label: translate('home:instruments.installExtension'),
                     click: () => {
                         const { installExtension } =
                             require("home/instruments/instrument-object-details") as typeof import("home/instruments/instrument-object-details");
@@ -135,7 +136,7 @@ export class InstrumentsStore {
 
         menu.append(
             new MenuItem({
-                label: "Open in Tab",
+                label: translate('home:instruments.openInTab'),
                 click: () => {
                     instrument.openEditor("tab");
                 }
@@ -144,7 +145,7 @@ export class InstrumentsStore {
 
         menu.append(
             new MenuItem({
-                label: "Open in New Window",
+                label: translate('home:instruments.openInNewWindow'),
                 click: () => {
                     instrument.openEditor("window");
                 }
@@ -159,7 +160,7 @@ export class InstrumentsStore {
 
         menu.append(
             new MenuItem({
-                label: "Delete",
+                label: translate('home:instruments.delete'),
                 click: () => {
                     this.deleteInstruments([instrument]);
                 }
@@ -280,6 +281,7 @@ window.addEventListener("message", (message: any) => {
 });
 
 const TabButton = observer(function ({ tab }: { tab: ITabDefinition }) {
+    const { t } = useTranslation('home');
     return (
         <button
             className="btn btn btn-secondary"
@@ -287,7 +289,7 @@ const TabButton = observer(function ({ tab }: { tab: ITabDefinition }) {
             title={
                 tab.instance.tooltipTitle
                     ? tab.instance.tooltipTitle
-                    : `Show ${tab.instance.title} Tab`
+                    : t('instruments.showTabTitle', { title: tab.instance.title })
             }
             style={{ display: "inline-flex", alignItems: "center" }}
         >
@@ -306,6 +308,8 @@ const Toolbar = observer(
         instrumentsStore: InstrumentsStore;
     }> {
         render() {
+            const t = (key: string) => translate(`home:${key}`);
+
             let buttons: {
                 id: string;
                 label: string;
@@ -318,8 +322,8 @@ const Toolbar = observer(
             }[] = [
                 {
                     id: "instrument-add",
-                    label: "Add Instrument",
-                    title: "Add instrument",
+                    label: t('addInstrument'),
+                    title: t('addInstrumentTitle'),
                     className: "btn-success",
                     style:
                         deletedInstruments.size == 0
@@ -344,8 +348,8 @@ const Toolbar = observer(
             if (deletedInstruments.size > 0) {
                 buttons.push({
                     id: "show-deleted-instruments",
-                    label: "Deleted Instruments",
-                    title: "Show deleted instruments",
+                    label: t('deletedInstruments'),
+                    title: t('showDeletedInstrumentsTitle'),
                     className: "btn-secondary",
                     style: { marginRight: 20 },
                     onClick: () => {
@@ -358,13 +362,13 @@ const Toolbar = observer(
 
             buttons.push({
                 id: "export-instrument",
-                label: "Export",
+                label: t('export'),
                 icon: (
                     <svg viewBox="0 0 24 24" fill="currentcolor">
                         <path d="M8.71 7.71 11 5.41V15a1 1 0 0 0 2 0V5.41l2.29 2.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42l-4-4a1 1 0 0 0-.33-.21 1 1 0 0 0-.76 0 1 1 0 0 0-.33.21l-4 4a1 1 0 1 0 1.42 1.42M21 14a1 1 0 0 0-1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4a1 1 0 0 0-2 0v4a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-4a1 1 0 0 0-1-1" />
                     </svg>
                 ),
-                title: "Export to database",
+                title: t('exportTitle'),
                 className: "btn-secondary",
                 onClick: () => {
                     showExportDialog(this.props.instrumentsStore);
@@ -373,13 +377,13 @@ const Toolbar = observer(
 
             buttons.push({
                 id: "import-instrument",
-                label: "Import",
+                label: t('import'),
                 icon: (
                     <svg viewBox="0 0 24 24" fill="currentcolor">
                         <path d="M21 14a1 1 0 0 0-1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4a1 1 0 0 0-2 0v4a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-4a1 1 0 0 0-1-1m-9.71 1.71a1 1 0 0 0 .33.21.94.94 0 0 0 .76 0 1 1 0 0 0 .33-.21l4-4a1 1 0 0 0-1.42-1.42L13 12.59V3a1 1 0 0 0-2 0v9.59l-2.29-2.3a1 1 0 1 0-1.42 1.42Z" />
                     </svg>
                 ),
-                title: "Import from database",
+                title: t('importTitle'),
                 className: "btn-secondary",
                 onClick: async () => {
                     let defaultPath = window.localStorage.getItem(
@@ -475,6 +479,8 @@ const InstrumentToolbarEnclosure = observer(
 
 const InstrumentPropertiesEnclosure = observer(
     ({ instrumentsStore }: { instrumentsStore: InstrumentsStore }) => {
+        const { t } = useTranslation('home');
+
         if (!instrumentsStore.selectedInstrumentId) {
             return null;
         }
@@ -494,7 +500,7 @@ const InstrumentPropertiesEnclosure = observer(
 
         return (
             <div className="EezStudio_HomeTab_Instruments_SelectedInstrument_Properties_Section">
-                <h6>Properties</h6>
+                <h6>{t('instruments.properties')}</h6>
                 <div>
                     <div className="EezStudio_InstrumentPropertiesEnclosure">
                         <InstrumentProperties instrument={instrument} />
@@ -507,6 +513,8 @@ const InstrumentPropertiesEnclosure = observer(
 
 const InstrumentConnectionEnclosure = observer(
     ({ instrumentsStore }: { instrumentsStore: InstrumentsStore }) => {
+        const { t } = useTranslation('home');
+
         if (!instrumentsStore.selectedInstrumentId) {
             return null;
         }
@@ -526,7 +534,7 @@ const InstrumentConnectionEnclosure = observer(
 
         return (
             <div className="EezStudio_HomeTab_Instruments_SelectedInstrument_Properties_Section">
-                <h6>Connection</h6>
+                <h6>{t('instruments.connection')}</h6>
                 <div>
                     <div className="EezStudio_InstrumentConnectionEnclosure">
                         <InstrumentConnection instrument={instrument} />

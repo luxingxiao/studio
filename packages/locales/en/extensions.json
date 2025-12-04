@@ -1,0 +1,62 @@
+{
+    "navigation": {
+        "projectEditorExtensions": "Project Editor Extensions",
+        "instrumentExtensions": "Instrument Extensions",
+        "measurementExtensions": "Measurement Extensions"
+    },
+    "filter": {
+        "all": "All",
+        "installed": "Installed",
+        "notInstalled": "Not installed",
+        "newVersions": "New versions"
+    },
+    "buttons": {
+        "install": "Install",
+        "update": "Update",
+        "replace": "Replace",
+        "uninstall": "Uninstall",
+        "export": "Export",
+        "updateAll": "Update All",
+        "updateCatalog": "Update Catalog",
+        "installExtension": "Install Extension"
+    },
+    "labels": {
+        "versions": "Versions:",
+        "changeImage": "Change image",
+        "noExtensionFound": "No extension found",
+        "actions": "Actions"
+    },
+    "dialogs": {
+        "confirmUninstall": "Are you sure?",
+        "installExtensionFromFile": "Install extension from local file",
+        "installExtensionFromFolder": "Install extension from local folder"
+    },
+    "fileFilter": {
+        "extensions": "Extensions",
+        "allFiles": "All Files"
+    },
+    "notifications": {
+        "updating": "Updating...",
+        "installingExtension": "Installing extension {{name}}@{{version}} ...",
+        "extensionInstalled": "Extension {{name}}@{{version}} has been installed.",
+        "extensionInstalledSimple": "Extension \"{{name}}\" installed",
+        "failedToInstall": "Failed to install {{name}}@{{version}} extension: {{error}}",
+        "downloading": "Downloading \"{{name}}\" extension package ...",
+        "downloadingProgress": "Downloading \"{{name}}\" extension package: {{loaded}} of {{total}}.",
+        "hashMismatch": "Failed to install \"{{name}}\" extension because package file hash doesn't match.",
+        "failedToInstallSimple": "Failed to install \"{{name}}\" extension.",
+        "failedToDownload": "Failed to download \"{{name}}\" extension package.",
+        "savedTo": "Saved to \"{{path}}\"",
+        "notValidPackage": "This is not a valid extension package file.",
+        "newerVersionInstalled": "The newer version {{version}} is already installed.",
+        "olderVersionInstalled": "The older version {{version}} is already installed.",
+        "sameVersionInstalled": "That version is already installed.",
+        "allExtensionsUpdated": "All extensions successfully updated!",
+        "installingFromFolder": "Installing extension from {{folder}} ...",
+        "extensionFromFolderInstalled": "Extension from {{folder}} has been installed.",
+        "failedToInstallFromFolder": "Failed to install extension from {{folder}}: {{error}}"
+    },
+    "confirm": {
+        "buttonInstructions": "Click 'Yes' to replace."
+    }
+}

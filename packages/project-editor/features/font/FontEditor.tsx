@@ -18,7 +18,8 @@ import {
     objectToJS,
     getProjectStore,
     createObject,
-    isObjectExists
+    isObjectExists,
+    LayoutModels
 } from "project-editor/store";
 import { validators } from "eez-studio-shared/validation";
 import * as notification from "eez-studio-ui/notification";
@@ -603,6 +604,7 @@ export const FontEditor = observer(
                     <FlexLayoutContainer
                         model={this.context.layoutModels.fonts}
                         factory={this.factory}
+                        onRenderTab={LayoutModels.translateTabName}
                     />
                 </div>
             );

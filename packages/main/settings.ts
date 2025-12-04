@@ -50,6 +50,7 @@ class Settings {
     locale: string = "";
     dateFormat: string = "";
     timeFormat: string = "";
+    uiLanguage: string = "en";
 
     isDarkTheme: boolean = false;
 
@@ -91,6 +92,7 @@ class Settings {
             locale: observable,
             dateFormat: observable,
             timeFormat: observable,
+            uiLanguage: observable,
             isDarkTheme: observable,
             showComponentsPaletteInProjectEditor: observable
         });
@@ -184,6 +186,10 @@ class Settings {
 
         if (settingsJs.isDarkTheme != undefined) {
             this.isDarkTheme = settingsJs.isDarkTheme;
+        }
+
+        if ((settingsJs as any).uiLanguage != undefined) {
+            this.uiLanguage = (settingsJs as any).uiLanguage;
         }
 
         if (settingsJs.showComponentsPaletteInProjectEditor != undefined) {
@@ -452,6 +458,27 @@ ipcMain.on("getTimeFormat", function (event: any) {
 
 ipcMain.on("setTimeFormat", function (event: any, value: string) {
     setTimeFormat(value);
+});
+
+////////////////////////////////////////////////////////////////////////////////
+
+export function getUiLanguage() {
+    return settings.uiLanguage || 'en';
+}
+
+export function setUiLanguage(value: string) {
+    runInAction(() => (settings.uiLanguage = value));
+}
+
+ipcMain.on("getUiLanguage", function (event: any) {
+    event.returnValue = getUiLanguage();
+});
+
+ipcMain.on("setUiLanguage", function (event: any, value: string) {
+    setUiLanguage(value);
+    // Notify that UI language changed - menu will be rebuilt
+    const { updateMainI18nLanguage } = require('main/i18n');
+    updateMainI18nLanguage(value);
 });
 
 ////////////////////////////////////////////////////////////////////////////////

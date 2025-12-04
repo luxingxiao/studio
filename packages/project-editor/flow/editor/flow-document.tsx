@@ -3,6 +3,7 @@ import { intersection } from "lodash";
 import { MenuItem } from "@electron/remote";
 
 import type { Point, Rect } from "eez-studio-shared/geometry";
+import { t as translate } from "eez-studio-shared/i18n";
 import type { IDocument } from "project-editor/flow/flow-interfaces";
 import type { EditorFlowContext } from "project-editor/flow/editor/context";
 import {
@@ -173,7 +174,7 @@ export class FlowDocument implements IDocument {
         if (isPage && objects.length == 0) {
             additionalMenuItems.push(
                 new MenuItem({
-                    label: "Center View",
+                    label: translate("projectEditor:contextMenu.centerView"),
                     click: async () => {
                         this.flowContext.viewState.centerView();
                     }
@@ -182,7 +183,7 @@ export class FlowDocument implements IDocument {
 
             additionalMenuItems.push(
                 new MenuItem({
-                    label: "Center View on All Pages",
+                    label: translate("projectEditor:contextMenu.centerViewOnAllPages"),
                     click: async () => {
                         this.flowContext.viewState.centerView();
 
@@ -238,7 +239,7 @@ export class FlowDocument implements IDocument {
             if (!this.projectStore.uiStateStore.globalFlowZoom) {
                 additionalMenuItems.push(
                     new MenuItem({
-                        label: "Set the Same Zoom for All Pages",
+                        label: translate("projectEditor:contextMenu.setTheSameZoomForAllPages"),
                         click: async () => {
                             for (const page of this.projectStore.project
                                 .pages) {

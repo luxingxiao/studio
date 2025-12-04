@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import classNames from "classnames";
 
 import { Icon } from "eez-studio-ui/icon";
+import { useTranslation } from "eez-studio-shared/i18n";
 
 import { Settings } from "home/settings";
 import {
@@ -98,193 +99,189 @@ const HOME_TAB_INSTRUMENTS_ICON = (
 
 ////////////////////////////////////////////////////////////////////////////////
 
-export const Home = observer(
-    class Home extends React.Component {
-        render() {
-            return (
-                <div className="EezStudio_HomeTab">
-                    <div className="EezStudio_HomeTab_Header">
-                        <div className="EezStudio_HomeTab_Navigation">
-                            <div
-                                className={classNames(
-                                    "EezStudio_HomeTab_NavigationItem",
-                                    {
-                                        selected:
-                                            homeTabStore.activeTab == "open"
-                                    }
-                                )}
-                                onClick={action(() => {
-                                    homeTabStore.activeTab = "open";
-                                })}
-                                title={
-                                    "Open a local project or select one from the recent list"
-                                }
-                            >
-                                <Icon icon={HOME_TAB_OPEN_ICON} size={32} />{" "}
-                                Open
-                            </div>
-                            <div
-                                className={classNames(
-                                    "EezStudio_HomeTab_NavigationItem",
-                                    {
-                                        selected:
-                                            homeTabStore.activeTab == "create"
-                                    }
-                                )}
-                                onClick={action(() => {
-                                    homeTabStore.activeTab = "create";
-                                })}
-                                title="Create a new project"
-                            >
-                                <Icon icon={HOME_TAB_CREATE_ICON} size={32} />{" "}
-                                Create
-                            </div>
-                            <div
-                                className={classNames(
-                                    "EezStudio_HomeTab_NavigationItem",
-                                    {
-                                        selected:
-                                            homeTabStore.activeTab == "examples"
-                                    }
-                                )}
-                                onClick={action(() => {
-                                    homeTabStore.activeTab = "examples";
-                                })}
-                                title="Example projects ready to run or edit"
-                            >
-                                <Icon icon={HOME_TAB_EXAMPLES_ICON} size={32} />{" "}
-                                Examples
-                            </div>
-                            {/*<div
-                                className={classNames(
-                                    "EezStudio_HomeTab_NavigationItem",
-                                    {
-                                        selected:
-                                            homeTabStore.activeTab == "run"
-                                    }
-                                )}
-                                onClick={action(() => {
-                                    homeTabStore.activeTab = "run";
-                                })}
-                                title="Run dashboard projects from the list of shortcuts"
-                            >
-                                <Icon icon="material:apps" size={32} /> Run
-                            </div>*/}
-                            <div
-                                className={classNames(
-                                    "EezStudio_HomeTab_NavigationItem",
-                                    {
-                                        selected:
-                                            homeTabStore.activeTab ==
-                                            "instruments"
-                                    }
-                                )}
-                                onClick={action(() => {
-                                    homeTabStore.activeTab = "instruments";
-                                })}
-                                title="Instruments manager"
-                            >
-                                <Icon
-                                    icon={HOME_TAB_INSTRUMENTS_ICON}
-                                    size={32}
-                                />{" "}
-                                Instruments
-                            </div>
-                            <div
-                                className={classNames(
-                                    "EezStudio_HomeTab_NavigationItem",
-                                    {
-                                        selected:
-                                            homeTabStore.activeTab ==
-                                            "extensions"
-                                    }
-                                )}
-                                onClick={action(() => {
-                                    homeTabStore.activeTab = "extensions";
-                                })}
-                                title="Extensions manager"
-                            >
-                                <Icon
-                                    icon={"material:extension"}
-                                    size={32}
-                                    attention={
-                                        extensionsManagerStore
-                                            .newVersionsInAllSections.length > 0
-                                    }
-                                />
-                                Extensions
-                            </div>
-                            <div
-                                className={classNames(
-                                    "EezStudio_HomeTab_NavigationItem",
-                                    {
-                                        selected:
-                                            homeTabStore.activeTab == "settings"
-                                    }
-                                )}
-                                onClick={action(() => {
-                                    homeTabStore.activeTab = "settings";
-                                })}
-                                title="Global user settings"
-                            >
-                                <Icon
-                                    icon={"material:settings"}
-                                    size={32}
-                                    attention={
-                                        instrumentDatabases.activeDatabase
-                                            ?.isCompactDatabaseAdvisable
-                                    }
-                                />
-                                Settings
-                            </div>
-                        </div>
-                        {/*
-                        <div className="EezStudio_HomeTab_Tabs">
-                            {tabs.allTabs
-                                .filter(
-                                    tab => tab.instance.category == "common"
-                                )
-                                .map(tab => (
-                                    <TabButton
-                                        key={tab.instance.id}
-                                        tab={tab}
-                                    />
-                                ))}
-                                </div>*/}
-                    </div>
+export const Home = observer(function Home() {
+    const { t } = useTranslation("home");
 
-                    <div className="EezStudio_HomeTab_Body">
-                        {homeTabStore.activeTab == "open" && <Projects />}
-                        {homeTabStore.activeTab == "create" && (
-                            <NewProjectWizard
-                                wizardModel={wizardModelTemplates}
-                                modalDialog={observable.box<any>()}
-                            />
+    return (
+        <div className="EezStudio_HomeTab">
+            <div className="EezStudio_HomeTab_Header">
+                <div className="EezStudio_HomeTab_Navigation">
+                    <div
+                        className={classNames(
+                            "EezStudio_HomeTab_NavigationItem",
+                            {
+                                selected:
+                                    homeTabStore.activeTab == "open"
+                            }
                         )}
-                        {homeTabStore.activeTab == "examples" && (
-                            <NewProjectWizard
-                                wizardModel={wizardModelExamples}
-                                modalDialog={observable.box<any>()}
-                            />
+                        onClick={action(() => {
+                            homeTabStore.activeTab = "open";
+                        })}
+                        title={t("navigation.openTooltip")}
+                    >
+                        <Icon icon={HOME_TAB_OPEN_ICON} size={32} />{" "}
+                        {t("tabs.open")}
+                    </div>
+                    <div
+                        className={classNames(
+                            "EezStudio_HomeTab_NavigationItem",
+                            {
+                                selected:
+                                    homeTabStore.activeTab == "create"
+                            }
                         )}
-                        {/*
-                        homeTabStore.activeTab == "run" && (
-                            <div style={{ margin: "auto" }}></div>
-                        )
-                        */}
-                        {homeTabStore.activeTab == "instruments" && (
-                            <Instruments
-                                instrumentsStore={defaultInstrumentsStore}
-                                size="M"
-                            />
+                        onClick={action(() => {
+                            homeTabStore.activeTab = "create";
+                        })}
+                        title={t("navigation.createTooltip")}
+                    >
+                        <Icon icon={HOME_TAB_CREATE_ICON} size={32} />{" "}
+                        {t("tabs.create")}
+                    </div>
+                    <div
+                        className={classNames(
+                            "EezStudio_HomeTab_NavigationItem",
+                            {
+                                selected:
+                                    homeTabStore.activeTab == "examples"
+                            }
                         )}
-                        {homeTabStore.activeTab == "extensions" && (
-                            <ExtensionsManager />
+                        onClick={action(() => {
+                            homeTabStore.activeTab = "examples";
+                        })}
+                        title={t("navigation.examplesTooltip")}
+                    >
+                        <Icon icon={HOME_TAB_EXAMPLES_ICON} size={32} />{" "}
+                        {t("tabs.examples")}
+                    </div>
+                    {/*<div
+                        className={classNames(
+                            "EezStudio_HomeTab_NavigationItem",
+                            {
+                                selected:
+                                    homeTabStore.activeTab == "run"
+                            }
                         )}
-                        {homeTabStore.activeTab == "settings" && <Settings />}
+                        onClick={action(() => {
+                            homeTabStore.activeTab = "run";
+                        })}
+                        title="Run dashboard projects from the list of shortcuts"
+                    >
+                        <Icon icon="material:apps" size={32} /> Run
+                    </div>*/}
+                    <div
+                        className={classNames(
+                            "EezStudio_HomeTab_NavigationItem",
+                            {
+                                selected:
+                                    homeTabStore.activeTab ==
+                                    "instruments"
+                            }
+                        )}
+                        onClick={action(() => {
+                            homeTabStore.activeTab = "instruments";
+                        })}
+                        title={t("navigation.instrumentsTooltip")}
+                    >
+                        <Icon
+                            icon={HOME_TAB_INSTRUMENTS_ICON}
+                            size={32}
+                        />{" "}
+                        {t("tabs.instruments")}
+                    </div>
+                    <div
+                        className={classNames(
+                            "EezStudio_HomeTab_NavigationItem",
+                            {
+                                selected:
+                                    homeTabStore.activeTab ==
+                                    "extensions"
+                            }
+                        )}
+                        onClick={action(() => {
+                            homeTabStore.activeTab = "extensions";
+                        })}
+                        title={t("navigation.extensionsTooltip")}
+                    >
+                        <Icon
+                            icon={"material:extension"}
+                            size={32}
+                            attention={
+                                extensionsManagerStore
+                                    .newVersionsInAllSections.length > 0
+                            }
+                        />
+                        {t("tabs.extensions")}
+                    </div>
+                    <div
+                        className={classNames(
+                            "EezStudio_HomeTab_NavigationItem",
+                            {
+                                selected:
+                                    homeTabStore.activeTab == "settings"
+                            }
+                        )}
+                        onClick={action(() => {
+                            homeTabStore.activeTab = "settings";
+                        })}
+                        title={t("navigation.settingsTooltip")}
+                    >
+                        <Icon
+                            icon={"material:settings"}
+                            size={32}
+                            attention={
+                                instrumentDatabases.activeDatabase
+                                    ?.isCompactDatabaseAdvisable
+                            }
+                        />
+                        {t("tabs.settings")}
                     </div>
                 </div>
-            );
-        }
-    }
-);
+                {/*
+                <div className="EezStudio_HomeTab_Tabs">
+                    {tabs.allTabs
+                        .filter(
+                            tab => tab.instance.category == "common"
+                        )
+                        .map(tab => (
+                            <TabButton
+                                key={tab.instance.id}
+                                tab={tab}
+                            />
+                        ))}
+                        </div>*/}
+            </div>
+
+            <div className="EezStudio_HomeTab_Body">
+                {homeTabStore.activeTab == "open" && <Projects />}
+                {homeTabStore.activeTab == "create" && (
+                    <NewProjectWizard
+                        wizardModel={wizardModelTemplates}
+                        modalDialog={observable.box<any>()}
+                    />
+                )}
+                {homeTabStore.activeTab == "examples" && (
+                    <NewProjectWizard
+                        wizardModel={wizardModelExamples}
+                        modalDialog={observable.box<any>()}
+                    />
+                )}
+                {/*
+                homeTabStore.activeTab == "run" && (
+                    <div style={{ margin: "auto" }}></div>
+                )
+                */}
+                {homeTabStore.activeTab == "instruments" && (
+                    <Instruments
+                        instrumentsStore={defaultInstrumentsStore}
+                        size="M"
+                    />
+                )}
+                {homeTabStore.activeTab == "extensions" && (
+                    <ExtensionsManager />
+                )}
+                {homeTabStore.activeTab == "settings" && <Settings />}
+            </div>
+        </div>
+    );
+});

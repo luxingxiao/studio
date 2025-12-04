@@ -12,6 +12,7 @@ import { TextAction } from "eez-studio-ui/action";
 import { showGenericDialog } from "eez-studio-ui/generic-dialog";
 
 import { ProjectContext } from "project-editor/project/context";
+import { LayoutModels } from "project-editor/store";
 import {
     AbsoluteFileInput,
     AbsoluteFileSaveInput
@@ -329,6 +330,7 @@ export const TextsTab = observer(
                 <FlexLayoutContainer
                     model={this.context.layoutModels.texts}
                     factory={this.factory}
+                    onRenderTab={LayoutModels.translateTabName}
                 />
             );
         }

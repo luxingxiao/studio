@@ -1,0 +1,62 @@
+{
+    "navigation": {
+        "projectEditorExtensions": "项目编辑器扩展",
+        "instrumentExtensions": "仪器扩展",
+        "measurementExtensions": "测量扩展"
+    },
+    "filter": {
+        "all": "全部",
+        "installed": "已安装",
+        "notInstalled": "未安装",
+        "newVersions": "新版本"
+    },
+    "buttons": {
+        "install": "安装",
+        "update": "更新",
+        "replace": "替换",
+        "uninstall": "卸载",
+        "export": "导出",
+        "updateAll": "全部更新",
+        "updateCatalog": "更新目录",
+        "installExtension": "安装扩展"
+    },
+    "labels": {
+        "versions": "版本：",
+        "changeImage": "更改图片",
+        "noExtensionFound": "未找到扩展",
+        "actions": "操作"
+    },
+    "dialogs": {
+        "confirmUninstall": "确定要卸载吗？",
+        "installExtensionFromFile": "从本地文件安装扩展",
+        "installExtensionFromFolder": "从本地文件夹安装扩展"
+    },
+    "fileFilter": {
+        "extensions": "扩展",
+        "allFiles": "所有文件"
+    },
+    "notifications": {
+        "updating": "正在更新...",
+        "installingExtension": "正在安装扩展 {{name}}@{{version}} ...",
+        "extensionInstalled": "扩展 {{name}}@{{version}} 已安装。",
+        "extensionInstalledSimple": "扩展 \"{{name}}\" 已安装",
+        "failedToInstall": "安装扩展 {{name}}@{{version}} 失败：{{error}}",
+        "downloading": "正在下载扩展包 \"{{name}}\" ...",
+        "downloadingProgress": "正在下载扩展包 \"{{name}}\"：{{loaded}} / {{total}}。",
+        "hashMismatch": "安装扩展 \"{{name}}\" 失败，因为包文件哈希不匹配。",
+        "failedToInstallSimple": "安装扩展 \"{{name}}\" 失败。",
+        "failedToDownload": "下载扩展包 \"{{name}}\" 失败。",
+        "savedTo": "已保存到 \"{{path}}\"",
+        "notValidPackage": "这不是有效的扩展包文件。",
+        "newerVersionInstalled": "已安装更新版本 {{version}}。",
+        "olderVersionInstalled": "已安装较旧版本 {{version}}。",
+        "sameVersionInstalled": "该版本已安装。",
+        "allExtensionsUpdated": "所有扩展已成功更新！",
+        "installingFromFolder": "正在从 {{folder}} 安装扩展 ...",
+        "extensionFromFolderInstalled": "来自 {{folder}} 的扩展已安装。",
+        "failedToInstallFromFolder": "从 {{folder}} 安装扩展失败：{{error}}"
+    },
+    "confirm": {
+        "buttonInstructions": "点击\"是\"进行替换。"
+    }
+}

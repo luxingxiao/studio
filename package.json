@@ -50,7 +50,8 @@
         "generate-license-file": "npx generate-license-file",
         "madge-circular": "madge --circular packages/home/main.tsx > circular.txt",
         "madge-graph": "madge --image source-graph.svg packages/home/main.tsx",
-        "madge-graph-circular": "madge --circular --image source-graph-circular.svg packages/home/main.tsx"
+        "madge-graph-circular": "madge --circular --image source-graph-circular.svg packages/home/main.tsx",
+        "i18n:extract": "i18next-parser"
     },
     "prettier": {
         "printWidth": 80,
@@ -100,6 +101,7 @@
         "gulp": "^5.0.1",
         "gulp-cli": "^3.1.0",
         "gulp-terser": "2.1.0",
+        "i18next-parser": "^9.3.0",
         "jsdom": "22.1.0",
         "json-to-pretty-yaml": "1.2.2",
         "less": "3.13.1",
@@ -137,6 +139,7 @@
         "flexlayout-react": "0.7.15",
         "fourier-transform": "1.1.2",
         "fs-extra": "6.0.1",
+        "i18next": "^25.7.1",
         "immutability-helper": "3.1.1",
         "jquery": "3.7.1",
         "jsmodbus": "4.0.10",
@@ -161,6 +164,7 @@
         "quill": "^2.0.3",
         "react": "18.3.1",
         "react-dom": "18.3.1",
+        "react-i18next": "^16.3.5",
         "react-select": "5.8.2",
         "react-toastify": "10.0.6",
         "react-virtualized-auto-sizer": "1.0.24",

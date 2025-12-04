@@ -26,6 +26,7 @@ import {
 } from "eez-studio-shared/util-electron";
 import { guid } from "eez-studio-shared/guid";
 import { stringCompare } from "eez-studio-shared/string";
+import { t as translate } from "eez-studio-shared/i18n";
 
 import { showDialog } from "eez-studio-ui/dialog";
 import { Loader } from "eez-studio-ui/loader";
@@ -2143,7 +2144,7 @@ const ProjectProperties = observer(
             if (wizardModel.createProjectInProgress) {
                 return (
                     <div className="EezStudio_NewProjectWizard_CreateProjectProgress">
-                        <h6>Creating project ...</h6>
+                        <h6>{translate('wizard:creatingProject')}</h6>
                         <Loader />
                         <div>{wizardModel.progress || <span>&nbsp;</span>}</div>
                     </div>
@@ -2155,14 +2156,14 @@ const ProjectProperties = observer(
                     <PlatformDescription wizardModel={wizardModel} />
 
                     <div className="EezStudio_NewProjectWizard_ProjectProperties_Section">
-                        <h6>Project Settings</h6>
+                        <h6>{translate('wizard:projectSettings')}</h6>
                         <div>
                             <div className="mb-3">
                                 <label
                                     htmlFor="new-project-wizard-name-input"
                                     className="form-label"
                                 >
-                                    Name
+                                    {translate('wizard:name')}
                                 </label>
                                 <NameInput
                                     id="new-project-wizard-name-input"
@@ -2189,7 +2190,7 @@ const ProjectProperties = observer(
                                             className="form-label"
                                             htmlFor="new-project-wizard-lvgl-version"
                                         >
-                                            LVGL version
+                                            {translate('wizard:lvglVersion')}
                                         </label>
                                         <select
                                             id="new-project-wizard-lvgl-version"
@@ -2217,7 +2218,7 @@ const ProjectProperties = observer(
                                             className="form-label"
                                             htmlFor="new-project-wizard-commands-protocol"
                                         >
-                                            Commands protocol
+                                            {translate('wizard:commandsProtocol')}
                                         </label>
                                         <select
                                             id="new-project-wizard-commands-protocol"
@@ -2245,7 +2246,7 @@ const ProjectProperties = observer(
                                     htmlFor="new-project-wizard-location-input"
                                     className="col-form-label"
                                 >
-                                    Location
+                                    {translate('wizard:location')}
                                 </label>
                                 <DirectoryBrowserInput
                                     value={wizardModel.location || ""}
@@ -2282,7 +2283,7 @@ const ProjectProperties = observer(
                                         className="form-check-label"
                                         htmlFor="new-project-wizard-create-directory-checkbox"
                                     >
-                                        Create directory
+                                        {translate('wizard:createDirectory')}
                                     </label>
                                 </div>
                             )}
@@ -2295,8 +2296,8 @@ const ProjectProperties = observer(
                                     {wizardModel.selectedTemplateProject ||
                                     (wizardModel.isSelectedExampleWithGitRepository &&
                                         wizardModel.gitClone)
-                                        ? "Project folder path"
-                                        : "Project file path"}
+                                        ? translate('wizard:projectFolderPath')
+                                        : translate('wizard:projectFilePath')}
                                 </label>
                                 <div
                                     id="new-project-wizard-project-path-static"
@@ -2329,12 +2330,10 @@ const ProjectProperties = observer(
                                         className="form-check-label"
                                         htmlFor="new-project-wizard-git-clone-checkbox"
                                     >
-                                        Clone Git repository
+                                        {translate('wizard:cloneGitRepository')}
                                     </label>
                                     <div className="form-text">
-                                        Check this if you want to download the
-                                        entire repository not only eez-project
-                                        file and its dependencies.
+                                        {translate('wizard:cloneGitRepositoryHint')}
                                     </div>
                                 </div>
                             )}
@@ -2356,7 +2355,7 @@ const ProjectProperties = observer(
                                         className="form-check-label"
                                         htmlFor="new-project-wizard-git-init-checkbox"
                                     >
-                                        Initialize as Git repository
+                                        {translate('wizard:initializeAsGitRepository')}
                                     </label>
                                 </div>
                             )}
@@ -2367,7 +2366,7 @@ const ProjectProperties = observer(
                                     <>
                                         <div className="mb-3">
                                             <label className="form-label">
-                                                BB3 project file option
+                                                {translate('wizard:bb3ProjectFileOption')}
                                             </label>
 
                                             <div className="form-check ms-4">
@@ -2395,7 +2394,7 @@ const ProjectProperties = observer(
                                                     className="form-check-label"
                                                     htmlFor="new-project-wizard-bb3-project-download"
                                                 >
-                                                    Download from GitHub
+                                                    {translate('wizard:downloadFromGitHub')}
                                                 </label>
 
                                                 {wizardModel.bb3ProjectOption ==
@@ -2434,7 +2433,7 @@ const ProjectProperties = observer(
                                                     className="form-check-label"
                                                     htmlFor="new-project-wizard-bb3-project-local"
                                                 >
-                                                    I already have a local copy
+                                                    {translate('wizard:alreadyHaveLocalCopy')}
                                                 </label>
                                             </div>
                                         </div>
@@ -2446,7 +2445,7 @@ const ProjectProperties = observer(
                                                     htmlFor="new-project-wizard-bb3-project-file-path-input"
                                                     className="form-label"
                                                 >
-                                                    BB3 project file path
+                                                    {translate('wizard:bb3ProjectFilePath')}
                                                 </label>
                                                 <FileBrowserInput
                                                     id="new-project-wizard-bb3-project-file-path-input"
@@ -2479,7 +2478,7 @@ const ProjectProperties = observer(
                                 wizardModel.type == "resource" && (
                                     <div className="mb-3">
                                         <label className="form-label">
-                                            Target BB3 firmware
+                                            {translate('wizard:targetBb3Firmware')}
                                         </label>
 
                                         <div className="form-check ms-4">
@@ -2505,7 +2504,7 @@ const ProjectProperties = observer(
                                                 className="form-check-label"
                                                 htmlFor="new-project-wizard-bb3-target-version-v3"
                                             >
-                                                1.8 or newer
+                                                {translate('wizard:version18OrNewer')}
                                             </label>
                                         </div>
 
@@ -2532,7 +2531,7 @@ const ProjectProperties = observer(
                                                 className="form-check-label"
                                                 htmlFor="new-project-wizard-bb3-target-version-v2"
                                             >
-                                                1.7.X or older
+                                                {translate('wizard:version17OrOlder')}
                                             </label>
                                         </div>
                                     </div>
@@ -2547,14 +2546,14 @@ const ProjectProperties = observer(
                                             wizardModel.createProjectInProgress
                                         }
                                     >
-                                        Create Project
+                                        {translate('wizard:createProject')}
                                     </button>
                                 ) : (
                                     <>
                                         <ButtonAction
                                             className="btn-primary"
-                                            text="Edit Project"
-                                            title="Edit Project"
+                                            text={translate('wizard:editProject')}
+                                            title={translate('wizard:editProject')}
                                             icon="material:edit"
                                             onClick={this.onCreateProject}
                                             enabled={
@@ -2565,8 +2564,8 @@ const ProjectProperties = observer(
                                             ?.projectType != "IEXT" && (
                                             <ButtonAction
                                                 className="btn-secondary"
-                                                text="Run Project"
-                                                title="Run Project"
+                                                text={translate('wizard:runProject')}
+                                                title={translate('wizard:runProject')}
                                                 icon="material:play_arrow"
                                                 onClick={this.onRunProject}
                                                 enabled={
@@ -2624,9 +2623,8 @@ function PlatformDescription({ wizardModel }: { wizardModel: WizardModel }) {
             <h6>
                 <span>
                     {wizardModel.selectedProjectType.projectType == "IEXT"
-                        ? "Instrument"
-                        : "Platform"}{" "}
-                    Description
+                        ? translate('wizard:instrumentDescription')
+                        : translate('wizard:platformDescription')}
                 </span>
             </h6>
             <div>
@@ -2640,7 +2638,7 @@ function PlatformDescription({ wizardModel }: { wizardModel: WizardModel }) {
                                 openLink(targetPlatformLink);
                             }}
                         >
-                            Find more on the platform web site ...
+                            {translate('wizard:findMoreOnPlatformWebsite')}
                         </a>
                     </div>
                 )}
@@ -2695,11 +2693,9 @@ export const NewProjectWizard = observer(
                             </>
                         ) : (
                             <div className="EezStudio_NewProjectWizard_NoProjects">
-                                No{" "}
                                 {wizardModel.section == "templates"
-                                    ? "templates"
-                                    : "examples"}{" "}
-                                found
+                                    ? translate('wizard:noTemplatesFound')
+                                    : translate('wizard:noExamplesFound')}
                             </div>
                         )}
                     </div>
@@ -2720,7 +2716,7 @@ export function showNewProjectWizard() {
         {
             jsPanel: {
                 id: "new-project-wizard",
-                title: "New Project",
+                title: translate('wizard:newProject'),
                 width: 1280,
                 height: 800
             }

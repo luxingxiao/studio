@@ -13,6 +13,7 @@ import { Button } from "eez-studio-ui/button";
 import { IExtension } from "eez-studio-shared/extensions/extension";
 import * as notification from "eez-studio-ui/notification";
 import { FlexLayoutContainer } from "eez-studio-ui/FlexLayout";
+import { t as translate } from "eez-studio-shared/i18n";
 
 import {
     PageEditor,
@@ -285,6 +286,9 @@ const Content = observer(
             node: FlexLayout.TabNode,
             renderValues: FlexLayout.ITabRenderValues
         ) => {
+            // Translate tab names dynamically
+            LayoutModels.translateTabName(node, renderValues);
+
             if (
                 node.getId() == LayoutModels.CHECKS_TAB_ID ||
                 node.getId() == LayoutModels.OUTPUT_TAB_ID
@@ -331,8 +335,11 @@ const Content = observer(
                     icon
                 );
 
+                const tabName = node.getId() == LayoutModels.CHECKS_TAB_ID
+                    ? translate("projectEditor:layoutTabs.checks")
+                    : translate("projectEditor:layoutTabs.output");
                 renderValues.content =
-                    section.name + (numMessages > 0 ? ` (${numMessages})` : "");
+                    tabName + (numMessages > 0 ? ` (${numMessages})` : "");
             } else if (
                 node.getId() == LayoutModels.SEARCH_TAB_ID ||
                 node.getId() == LayoutModels.REFERENCES_TAB_ID
@@ -347,8 +354,11 @@ const Content = observer(
                     <Loader size={20} />
                 ) : null;
 
+                const tabName = node.getId() == LayoutModels.SEARCH_TAB_ID
+                    ? translate("projectEditor:layoutTabs.search")
+                    : translate("projectEditor:layoutTabs.references");
                 renderValues.content =
-                    section.name +
+                    tabName +
                     (section.messages.searchResults.length > 0
                         ? ` (${section.messages.searchResults.length})`
                         : "");

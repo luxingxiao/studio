@@ -25,6 +25,7 @@ import { settings } from "main/settings";
 import { APP_NAME } from "main/util";
 import { undoManager } from "eez-studio-shared/store";
 import { isDev } from "eez-studio-shared/util-electron";
+import { tMenu } from "main/i18n";
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -125,14 +126,14 @@ function buildMacOSAppMenu(
         label: APP_NAME,
         submenu: [
             {
-                label: "About " + APP_NAME,
+                label: tMenu('app.about', { appName: APP_NAME }),
                 click: showAboutBox
             },
             {
                 type: "separator"
             },
             {
-                label: "Services",
+                label: tMenu('app.services'),
                 role: "services",
                 submenu: []
             },
@@ -140,24 +141,24 @@ function buildMacOSAppMenu(
                 type: "separator"
             },
             {
-                label: "Hide " + APP_NAME,
+                label: tMenu('app.hide', { appName: APP_NAME }),
                 accelerator: "Command+H",
                 role: "hide"
             },
             {
-                label: "Hide Others",
+                label: tMenu('app.hideOthers'),
                 accelerator: "Command+Alt+H",
                 role: "hideOthers"
             },
             {
-                label: "Show All",
+                label: tMenu('app.showAll'),
                 role: "unhide"
             },
             {
                 type: "separator"
             },
             {
-                label: "Quit",
+                label: tMenu('app.quit'),
                 accelerator: "Command+Q",
                 click: function () {
                     setForceQuit();
@@ -175,21 +176,21 @@ function buildFileMenu(win: IWindow | undefined) {
 
     fileMenuSubmenu.push(
         {
-            label: "New Project...",
+            label: tMenu('file.newProject'),
             accelerator: "CmdOrCtrl+N",
             click: function (item, focusedWindow) {
                 createNewProject();
             }
         },
         {
-            label: "Add Instrument...",
+            label: tMenu('file.addInstrument'),
             accelerator: "CmdOrCtrl+Alt+N",
             click: function (item, focusedWindow) {
                 addInstrument();
             }
         },
         {
-            label: "New Window",
+            label: tMenu('file.newWindow'),
             accelerator: "CmdOrCtrl+Shift+N",
             click: function (item, focusedWindow) {
                 openHomeWindow();
@@ -199,7 +200,7 @@ function buildFileMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Open...",
+            label: tMenu('file.open'),
             accelerator: "CmdOrCtrl+O",
             click: (item, focusedWindow) => {
                 if (!focusedWindow) {
@@ -213,7 +214,7 @@ function buildFileMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Open Recent",
+            label: tMenu('file.openRecent'),
             submenu: settings.mru.map(mru => ({
                 label: mru.filePath,
                 click: function () {
@@ -253,7 +254,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 type: "separator"
             },
             {
-                label: "Reload Project",
+                label: tMenu('file.reloadProject'),
                 click: function (item: any, focusedWindow: any) {
                     focusedWindow.webContents.send("reload-project");
                 }
@@ -265,7 +266,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 type: "separator"
             },
             {
-                label: "Load Debug Info...",
+                label: tMenu('file.loadDebugInfo'),
                 click: async function (item: any, focusedWindow: any) {
                     const result = await dialog.showOpenDialog(focusedWindow, {
                         properties: ["openFile"],
@@ -291,7 +292,7 @@ function buildFileMenu(win: IWindow | undefined) {
 
         if (win.state.isDebuggerActive) {
             fileMenuSubmenu.push({
-                label: "Save Debug Info...",
+                label: tMenu('file.saveDebugInfo'),
                 click: function (item: any, focusedWindow: any) {
                     saveDebugInfo(focusedWindow);
                 }
@@ -304,7 +305,7 @@ function buildFileMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Import Instrument Definition...",
+            label: tMenu('file.importInstrumentDefinition'),
             click: async function (item: any, focusedWindow: any) {
                 const result = await dialog.showOpenDialog(focusedWindow, {
                     properties: ["openFile"],
@@ -331,7 +332,7 @@ function buildFileMenu(win: IWindow | undefined) {
             },
             {
                 id: "save",
-                label: "Save",
+                label: tMenu('file.save'),
                 accelerator: "CmdOrCtrl+S",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -340,7 +341,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 }
             },
             {
-                label: "Save As",
+                label: tMenu('file.saveAs'),
                 accelerator: "CmdOrCtrl+Shift+S",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -353,7 +354,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 type: "separator"
             },
             {
-                label: "Check",
+                label: tMenu('file.check'),
                 accelerator: "CmdOrCtrl+K",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -362,7 +363,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 }
             },
             {
-                label: "Build",
+                label: tMenu('file.build'),
                 accelerator: "CmdOrCtrl+B",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -375,7 +376,7 @@ function buildFileMenu(win: IWindow | undefined) {
         if (win.state.hasExtensionDefinitions) {
             fileMenuSubmenu.push(
                 {
-                    label: "Build Extensions",
+                    label: tMenu('file.buildExtensions'),
                     click: function (item: any, focusedWindow: any) {
                         if (focusedWindow) {
                             focusedWindow.webContents.send("build-extensions");
@@ -383,7 +384,7 @@ function buildFileMenu(win: IWindow | undefined) {
                     }
                 },
                 {
-                    label: "Build and Install Extensions",
+                    label: tMenu('file.buildAndInstallExtensions'),
                     click: function (item: any, focusedWindow: any) {
                         if (focusedWindow) {
                             focusedWindow.webContents.send(
@@ -401,7 +402,7 @@ function buildFileMenu(win: IWindow | undefined) {
             },
             {
                 id: "save",
-                label: "Save",
+                label: tMenu('file.save'),
                 accelerator: "CmdOrCtrl+S",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -421,7 +422,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 type: "separator"
             },
             {
-                label: "Close Window",
+                label: tMenu('file.closeWindow'),
                 accelerator: "CmdOrCtrl+W",
                 click: function (item: any, focusedWindow: any) {
                     if (focusedWindow) {
@@ -442,7 +443,7 @@ function buildFileMenu(win: IWindow | undefined) {
                 type: "separator"
             },
             {
-                label: "Exit",
+                label: tMenu('file.exit'),
                 click: function (item: any, focusedWindow: any) {
                     if (isCrashed(focusedWindow)) {
                         app.exit();
@@ -456,7 +457,7 @@ function buildFileMenu(win: IWindow | undefined) {
     }
 
     return {
-        label: "File",
+        label: tMenu('file.title'),
         submenu: fileMenuSubmenu
     };
 }
@@ -467,7 +468,7 @@ function buildEditMenu(win: IWindow | undefined) {
     const editSubmenu: Electron.MenuItemConstructorOptions[] = [
         {
             id: "undo",
-            label: "Undo",
+            label: tMenu('edit.undo'),
             accelerator: "CmdOrCtrl+Z",
             role: "undo",
             click: function (item, focusedWindow) {
@@ -484,7 +485,7 @@ function buildEditMenu(win: IWindow | undefined) {
         },
         {
             id: "redo",
-            label: "Redo",
+            label: tMenu('edit.redo'),
             accelerator: "CmdOrCtrl+Y",
             role: "redo",
             click: function (item, focusedWindow) {
@@ -503,7 +504,7 @@ function buildEditMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Cut",
+            label: tMenu('edit.cut'),
             accelerator: "CmdOrCtrl+X",
             role: "cut",
             click: function (item) {
@@ -513,7 +514,7 @@ function buildEditMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Copy",
+            label: tMenu('edit.copy'),
             accelerator: "CmdOrCtrl+C",
             role: "copy",
             click: function (item) {
@@ -523,7 +524,7 @@ function buildEditMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Paste",
+            label: tMenu('edit.paste'),
             accelerator: "CmdOrCtrl+V",
             role: "paste",
             click: function (item) {
@@ -533,7 +534,7 @@ function buildEditMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Delete",
+            label: tMenu('edit.delete'),
             accelerator: "Delete",
             role: "delete",
             click: function (item) {
@@ -546,7 +547,7 @@ function buildEditMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Select All",
+            label: tMenu('edit.selectAll'),
             accelerator: "CmdOrCtrl+A",
             role: "selectAll",
             click: function (item) {
@@ -562,7 +563,7 @@ function buildEditMenu(win: IWindow | undefined) {
             type: "separator"
         });
         editSubmenu.push({
-            label: "Find Project Component",
+            label: tMenu('edit.findProjectComponent'),
             accelerator: "CmdOrCtrl+Shift+F",
             click: function (item) {
                 if (win) {
@@ -573,7 +574,7 @@ function buildEditMenu(win: IWindow | undefined) {
     }
 
     const editMenu: Electron.MenuItemConstructorOptions = {
-        label: "Edit",
+        label: tMenu('edit.title'),
         submenu: editSubmenu
     };
 
@@ -603,7 +604,7 @@ function buildViewMenu(win: IWindow | undefined) {
 
     viewSubmenu.push(
         {
-            label: "Home",
+            label: tMenu('view.home'),
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("openTab", "home");
@@ -611,7 +612,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "History",
+            label: tMenu('view.history'),
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("openTab", "history");
@@ -619,7 +620,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Shortcuts and Groups",
+            label: tMenu('view.shortcutsAndGroups'),
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send(
@@ -630,7 +631,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Noteboooks",
+            label: tMenu('view.notebooks'),
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send(
@@ -641,7 +642,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Extensions",
+            label: tMenu('view.extensions'),
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("openTab", "extensions");
@@ -649,7 +650,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Settings",
+            label: tMenu('view.settings'),
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("openTab", "settings");
@@ -660,7 +661,7 @@ function buildViewMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Scrapbook for Project Editor",
+            label: tMenu('view.scrapbook'),
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("showScrapbookManager");
@@ -674,7 +675,7 @@ function buildViewMenu(win: IWindow | undefined) {
 
     viewSubmenu.push(
         {
-            label: "Toggle Full Screen",
+            label: tMenu('view.toggleFullscreen'),
             accelerator: (function () {
                 if (isMacOs()) {
                     return "Ctrl+Command+F";
@@ -689,7 +690,7 @@ function buildViewMenu(win: IWindow | undefined) {
             }
         },
         {
-            label: "Toggle Developer Tools",
+            label: tMenu('view.toggleDevTools'),
             accelerator: (function () {
                 if (isMacOs()) {
                     return "Alt+Command+I";
@@ -705,8 +706,8 @@ function buildViewMenu(win: IWindow | undefined) {
         },
         {
             label: settings.isDarkTheme
-                ? "Switch to Light Theme"
-                : "Switch to Dark Theme",
+                ? tMenu('view.switchToLightTheme')
+                : tMenu('view.switchToDarkTheme'),
             accelerator: (function () {
                 if (isMacOs()) {
                     return "Alt+Command+T";
@@ -724,15 +725,15 @@ function buildViewMenu(win: IWindow | undefined) {
             type: "separator"
         },
         {
-            label: "Zoom In",
+            label: tMenu('view.zoomIn'),
             role: "zoomIn"
         },
         {
-            label: "Zoom Out",
+            label: tMenu('view.zoomOut'),
             role: "zoomOut"
         },
         {
-            label: "Reset Zoom",
+            label: tMenu('view.resetZoom'),
             role: "resetZoom"
         },
         {
@@ -747,8 +748,8 @@ function buildViewMenu(win: IWindow | undefined) {
 
         viewSubmenu.push({
             label: settings.showComponentsPaletteInProjectEditor
-                ? "Hide Components Palette"
-                : "Show Components Palette",
+                ? tMenu('view.hideComponentsPalette')
+                : tMenu('view.showComponentsPalette'),
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send(
@@ -759,7 +760,7 @@ function buildViewMenu(win: IWindow | undefined) {
         });
 
         viewSubmenu.push({
-            label: "Reset Layout",
+            label: tMenu('view.resetLayout'),
             click: function (item) {
                 if (win) {
                     win.browserWindow.webContents.send("resetLayoutModels");
@@ -773,7 +774,7 @@ function buildViewMenu(win: IWindow | undefined) {
     }
 
     viewSubmenu.push({
-        label: "Next Tab",
+        label: tMenu('view.nextTab'),
         accelerator: "Ctrl+Tab",
         click: function (item) {
             if (win) {
@@ -783,7 +784,7 @@ function buildViewMenu(win: IWindow | undefined) {
     });
 
     viewSubmenu.push({
-        label: "Previous Tab",
+        label: tMenu('view.previousTab'),
         accelerator: "Ctrl+Shift+Tab",
         click: function (item) {
             if (win) {
@@ -797,7 +798,7 @@ function buildViewMenu(win: IWindow | undefined) {
     });
 
     viewSubmenu.push({
-        label: "Reload",
+        label: tMenu('view.reload'),
         accelerator: "CmdOrCtrl+R",
         click: function (item) {
             if (win) {
@@ -809,7 +810,7 @@ function buildViewMenu(win: IWindow | undefined) {
     });
 
     return {
-        label: "View",
+        label: tMenu('view.title'),
         submenu: viewSubmenu
     };
 }
@@ -820,16 +821,16 @@ function buildMacOSWindowMenu(
     win: IWindow | undefined
 ): Electron.MenuItemConstructorOptions {
     return {
-        label: "Window",
+        label: tMenu('window.title'),
         role: "window",
         submenu: [
             {
-                label: "Minimize",
+                label: tMenu('window.minimize'),
                 accelerator: "CmdOrCtrl+M",
                 role: "minimize"
             },
             {
-                label: "Close",
+                label: tMenu('window.close'),
                 accelerator: "CmdOrCtrl+W",
                 role: "close"
             },
@@ -837,7 +838,7 @@ function buildMacOSWindowMenu(
                 type: "separator"
             },
             {
-                label: "Bring All to Front",
+                label: tMenu('window.bringAllToFront'),
                 role: "front"
             }
         ]
@@ -853,7 +854,7 @@ function buildHelpMenu(
 
     if (isDev) {
         helpMenuSubmenu.push({
-            label: "Documentation",
+            label: tMenu('help.documentation'),
             accelerator: "F1",
             click: function (item: any, focusedWindow: any) {
                 focusedWindow.webContents.send("show-documentation-browser");
@@ -865,12 +866,12 @@ function buildHelpMenu(
     }
 
     helpMenuSubmenu.push({
-        label: "About",
+        label: tMenu('help.about'),
         click: showAboutBox
     });
 
     return {
-        label: "Help",
+        label: tMenu('help.title'),
         role: "help",
         submenu: helpMenuSubmenu
     };

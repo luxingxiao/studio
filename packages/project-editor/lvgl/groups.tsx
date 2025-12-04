@@ -22,7 +22,8 @@ import {
     createObject,
     getClassInfo,
     getProjectStore,
-    objectToString
+    objectToString,
+    LayoutModels
 } from "project-editor/store";
 import { Checkbox } from "project-editor/ui-components/PropertyGrid/Checkbox";
 import { ProjectEditor } from "project-editor/project-editor-interface";
@@ -461,11 +462,19 @@ export const LVGLGroupsTab = observer(
             return null;
         };
 
+        onRenderTab = (
+            node: FlexLayout.TabNode,
+            renderValues: FlexLayout.ITabRenderValues
+        ) => {
+            LayoutModels.translateTabName(node, renderValues);
+        };
+
         render() {
             return (
                 <FlexLayoutContainer
                     model={this.context.layoutModels.lvglGroups}
                     factory={this.factory}
+                    onRenderTab={this.onRenderTab}
                 />
             );
         }

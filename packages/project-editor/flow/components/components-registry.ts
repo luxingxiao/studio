@@ -8,6 +8,7 @@ import {
 } from "project-editor/core/object";
 import { ProjectEditor } from "project-editor/project-editor-interface";
 import type { ProjectStore } from "project-editor/store";
+import { t as translate } from "eez-studio-shared/i18n";
 
 export function getAllComponentClasses(
     projectStore: ProjectStore | undefined,
@@ -269,7 +270,12 @@ export function getComponentVisualData(
 
 export function getComponentGroupDisplayName(groupName: string) {
     if (groupName.startsWith("!")) {
-        return groupName.substring(2);
+        const name = groupName.substring(2);
+        // Try to translate known group names
+        const translationKey = `projectEditor:componentGroups.${name.replace(/\s+/g, '')}`;
+        const translated = translate(translationKey);
+        // If translation key is returned (not found), use original name
+        return translated === translationKey ? name : translated;
     }
     return groupName;
 }

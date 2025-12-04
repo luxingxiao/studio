@@ -15,6 +15,7 @@ import {
 import * as path from "path";
 
 import { onSimpleMessage } from "eez-studio-shared/util-renderer";
+import { t as translate } from "eez-studio-shared/i18n";
 
 import {
     loadPreinstalledExtension,
@@ -125,7 +126,9 @@ class HistoryTab implements IHomeTab {
     modified: boolean = false;
 
     id = "history";
-    title = "History";
+    get title() {
+        return translate('home:tabs.history');
+    }
     icon = "material:history";
     category: HomeTabCategory = "instrument";
 
@@ -222,7 +225,9 @@ class ShortcutsAndGroupsTab implements IHomeTab {
     modified: boolean = false;
 
     id = "shortcutsAndGroups";
-    title = "Shortcuts and Groups";
+    get title() {
+        return translate('home:tabs.shortcutsAndGroups');
+    }
     icon = "material:playlist_play";
     category: HomeTabCategory = "instrument";
 
@@ -267,7 +272,10 @@ class HomeSectionTab implements IHomeTab {
         return "homeSection_" + this.homeSection.id;
     }
     get title() {
-        return this.homeSection.title;
+        // Try to get translated title, fallback to original
+        const translatedTitle = translate(`home:tabs.${this.homeSection.id}`);
+        // If translation key is returned as-is, use original title
+        return translatedTitle.startsWith('home:') ? this.homeSection.title : translatedTitle;
     }
     get icon() {
         return this.homeSection.icon;

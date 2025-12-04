@@ -270,6 +270,7 @@ export const SettingsEditor = observer(
                 <FlexLayoutContainer
                     model={this.layoutModel}
                     factory={this.factory}
+                    onRenderTab={LayoutModels.translateTabName}
                 />
             );
         }
@@ -471,6 +472,7 @@ export const SettingsContent = observer(
                         <FlexLayoutContainer
                             model={this.layoutModel}
                             factory={this.factory}
+                            onRenderTab={LayoutModels.translateTabName}
                         />
                     );
                 } else {

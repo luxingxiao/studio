@@ -1,0 +1,81 @@
+{
+    "app": {
+        "about": "关于 {{appName}}",
+        "services": "服务",
+        "hide": "隐藏 {{appName}}",
+        "hideOthers": "隐藏其他",
+        "showAll": "显示全部",
+        "quit": "退出"
+    },
+    "file": {
+        "title": "文件",
+        "newProject": "新建项目...",
+        "addInstrument": "添加仪器...",
+        "newWindow": "新建窗口",
+        "open": "打开...",
+        "openRecent": "打开最近",
+        "reloadProject": "重新加载项目",
+        "loadDebugInfo": "加载调试信息...",
+        "saveDebugInfo": "保存调试信息...",
+        "importInstrumentDefinition": "导入仪器定义...",
+        "save": "保存",
+        "saveAs": "另存为",
+        "check": "检查",
+        "build": "构建",
+        "buildExtensions": "构建扩展",
+        "buildAndInstallExtensions": "构建并安装扩展",
+        "closeWindow": "关闭窗口",
+        "exit": "退出"
+    },
+    "edit": {
+        "title": "编辑",
+        "undo": "撤销",
+        "redo": "重做",
+        "cut": "剪切",
+        "copy": "复制",
+        "paste": "粘贴",
+        "pasteSpecial": "选择性粘贴",
+        "delete": "删除",
+        "selectAll": "全选",
+        "find": "查找...",
+        "findProjectComponent": "查找项目组件"
+    },
+    "view": {
+        "title": "视图",
+        "home": "主页",
+        "history": "历史",
+        "shortcutsAndGroups": "快捷方式和分组",
+        "notebooks": "笔记本",
+        "extensions": "扩展",
+        "settings": "设置",
+        "scrapbook": "项目编辑器剪贴簿",
+        "toggleFullscreen": "切换全屏",
+        "toggleDevTools": "切换开发者工具",
+        "switchToLightTheme": "切换到浅色主题",
+        "switchToDarkTheme": "切换到深色主题",
+        "zoomIn": "放大",
+        "zoomOut": "缩小",
+        "resetZoom": "重置缩放",
+        "showComponentsPalette": "显示组件面板",
+        "hideComponentsPalette": "隐藏组件面板",
+        "resetLayout": "重置布局",
+        "nextTab": "下一个标签",
+        "previousTab": "上一个标签",
+        "reload": "重新加载"
+    },
+    "window": {
+        "title": "窗口",
+        "minimize": "最小化",
+        "close": "关闭",
+        "bringAllToFront": "全部前置"
+    },
+    "help": {
+        "title": "帮助",
+        "documentation": "文档",
+        "about": "关于"
+    },
+    "dialogs": {
+        "fileNotExist": "文件不存在。",
+        "fileNotExistDetail": "文件 '{{filePath}}' 似乎已不存在。"
+    }
+}

@@ -1,0 +1,81 @@
+{
+    "app": {
+        "about": "About {{appName}}",
+        "services": "Services",
+        "hide": "Hide {{appName}}",
+        "hideOthers": "Hide Others",
+        "showAll": "Show All",
+        "quit": "Quit"
+    },
+    "file": {
+        "title": "File",
+        "newProject": "New Project...",
+        "addInstrument": "Add Instrument...",
+        "newWindow": "New Window",
+        "open": "Open...",
+        "openRecent": "Open Recent",
+        "reloadProject": "Reload Project",
+        "loadDebugInfo": "Load Debug Info...",
+        "saveDebugInfo": "Save Debug Info...",
+        "importInstrumentDefinition": "Import Instrument Definition...",
+        "save": "Save",
+        "saveAs": "Save As",
+        "check": "Check",
+        "build": "Build",
+        "buildExtensions": "Build Extensions",
+        "buildAndInstallExtensions": "Build and Install Extensions",
+        "closeWindow": "Close Window",
+        "exit": "Exit"
+    },
+    "edit": {
+        "title": "Edit",
+        "undo": "Undo",
+        "redo": "Redo",
+        "cut": "Cut",
+        "copy": "Copy",
+        "paste": "Paste",
+        "pasteSpecial": "Paste Special",
+        "delete": "Delete",
+        "selectAll": "Select All",
+        "find": "Find...",
+        "findProjectComponent": "Find Project Component"
+    },
+    "view": {
+        "title": "View",
+        "home": "Home",
+        "history": "History",
+        "shortcutsAndGroups": "Shortcuts and Groups",
+        "notebooks": "Notebooks",
+        "extensions": "Extensions",
+        "settings": "Settings",
+        "scrapbook": "Scrapbook for Project Editor",
+        "toggleFullscreen": "Toggle Full Screen",
+        "toggleDevTools": "Toggle Developer Tools",
+        "switchToLightTheme": "Switch to Light Theme",
+        "switchToDarkTheme": "Switch to Dark Theme",
+        "zoomIn": "Zoom In",
+        "zoomOut": "Zoom Out",
+        "resetZoom": "Reset Zoom",
+        "showComponentsPalette": "Show Components Palette",
+        "hideComponentsPalette": "Hide Components Palette",
+        "resetLayout": "Reset Layout",
+        "nextTab": "Next Tab",
+        "previousTab": "Previous Tab",
+        "reload": "Reload"
+    },
+    "window": {
+        "title": "Window",
+        "minimize": "Minimize",
+        "close": "Close",
+        "bringAllToFront": "Bring All to Front"
+    },
+    "help": {
+        "title": "Help",
+        "documentation": "Documentation",
+        "about": "About"
+    },
+    "dialogs": {
+        "fileNotExist": "File does not exist.",
+        "fileNotExistDetail": "The file '{{filePath}}' does not seem to exist anymore."
+    }
+}

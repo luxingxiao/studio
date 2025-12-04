@@ -21,6 +21,10 @@ export class SideDockComponent2 extends React.Component<{
     factory: (node: FlexLayout.TabNode) => React.ReactNode;
     header?: JSX.Element;
     width: number;
+    onRenderTab?: (
+        node: FlexLayout.TabNode,
+        renderValues: FlexLayout.ITabRenderValues
+    ) => void;
 }> {
     static defaultProps = { width: 240 };
 
@@ -68,6 +72,7 @@ export class SideDockComponent2 extends React.Component<{
                 <FlexLayoutContainer
                     model={this.props.flexLayoutModel}
                     factory={this.props.factory}
+                    onRenderTab={this.props.onRenderTab}
                 />
             );
 

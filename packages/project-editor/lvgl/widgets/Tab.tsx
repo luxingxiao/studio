@@ -20,6 +20,7 @@ import {
 import { AutoSize } from "project-editor/flow/component";
 import { Message } from "project-editor/store";
 import type { LVGLCode } from "project-editor/lvgl/to-lvgl-code";
+import { t as translate } from "eez-studio-shared/i18n";
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -74,7 +75,7 @@ export class LVGLTabWidget extends LVGLWidget {
                 messages.push(
                     new Message(
                         MessageType.ERROR,
-                        `Invalid position of Tab widget inside Widgets Structure`,
+                        translate("projectEditor:messages.invalidTabWidgetPosition"),
                         widget
                     )
                 );

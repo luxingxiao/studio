@@ -1,0 +1,76 @@
+{
+    "confirm": {
+        "title": "Confirm",
+        "delete": "Are you sure you want to delete this item?",
+        "deleteMultiple": "Are you sure you want to delete {{count}} items?",
+        "discard": "Discard unsaved changes?",
+        "close": "Close without saving?",
+        "reset": "Reset to default values?",
+        "overwrite": "File already exists. Overwrite?"
+    },
+    "alert": {
+        "error": "Error",
+        "warning": "Warning",
+        "info": "Information",
+        "success": "Success"
+    },
+    "prompt": {
+        "enterName": "Enter name:",
+        "enterValue": "Enter value:",
+        "rename": "Enter new name:"
+    },
+    "progress": {
+        "title": "Progress",
+        "loading": "Loading...",
+        "saving": "Saving...",
+        "building": "Building...",
+        "processing": "Processing...",
+        "importing": "Importing...",
+        "exporting": "Exporting...",
+        "downloading": "Downloading...",
+        "uploading": "Uploading...",
+        "connecting": "Connecting...",
+        "disconnecting": "Disconnecting...",
+        "pleaseWait": "Please wait..."
+    },
+    "file": {
+        "openTitle": "Open File",
+        "saveTitle": "Save File",
+        "saveAsTitle": "Save As",
+        "selectFolder": "Select Folder",
+        "allFiles": "All Files",
+        "projectFiles": "Project Files",
+        "imageFiles": "Image Files",
+        "jsonFiles": "JSON Files",
+        "csvFiles": "CSV Files"
+    },
+    "validation": {
+        "required": "This field is required",
+        "invalidFormat": "Invalid format",
+        "invalidNumber": "Please enter a valid number",
+        "invalidEmail": "Please enter a valid email address",
+        "minLength": "Minimum {{count}} characters required",
+        "maxLength": "Maximum {{count}} characters allowed",
+        "minValue": "Minimum value is {{value}}",
+        "maxValue": "Maximum value is {{value}}",
+        "unique": "This value must be unique",
+        "alreadyExists": "This name already exists"
+    },
+    "connection": {
+        "connect": "Connect",
+        "disconnect": "Disconnect",
+        "reconnect": "Reconnect",
+        "connectionFailed": "Connection failed",
+        "connectionLost": "Connection lost",
+        "tryReconnect": "Try to reconnect?"
+    },
+    "about": {
+        "title": "About {{appName}}",
+        "version": "Version",
+        "buildDate": "Build Date",
+        "website": "Website",
+        "license": "License",
+        "thirdPartyLicenses": "Third Party Licenses",
+        "copyright": "Copyright"
+    }
+}

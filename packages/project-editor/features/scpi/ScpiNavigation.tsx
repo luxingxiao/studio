@@ -12,6 +12,7 @@ import { ScpiSubsystem, ScpiCommand } from "project-editor/features/scpi/scpi";
 import { showImportScpiDocDialog } from "project-editor/features/scpi/importScpiDoc";
 import { computed, makeObservable } from "mobx";
 import { EditorComponent } from "project-editor/project/ui/EditorComponent";
+import { LayoutModels } from "project-editor/store";
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -46,11 +47,19 @@ export const ScpiTab = observer(
             return null;
         };
 
+        onRenderTab = (
+            node: FlexLayout.TabNode,
+            renderValues: FlexLayout.ITabRenderValues
+        ) => {
+            LayoutModels.translateTabName(node, renderValues);
+        };
+
         render() {
             return (
                 <FlexLayoutContainer
                     model={this.context.layoutModels.scpi}
                     factory={this.factory}
+                    onRenderTab={this.onRenderTab}
                 />
             );
         }

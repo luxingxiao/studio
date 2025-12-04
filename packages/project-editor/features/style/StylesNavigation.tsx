@@ -6,7 +6,7 @@ import * as FlexLayout from "flexlayout-react";
 
 import { FlexLayoutContainer } from "eez-studio-ui/FlexLayout";
 
-import { isObjectExists } from "project-editor/store";
+import { isObjectExists, LayoutModels } from "project-editor/store";
 import { ProjectContext } from "project-editor/project/context";
 import { Style } from "./style";
 import { drawText } from "project-editor/flow/editor/eez-gui-draw";
@@ -83,6 +83,7 @@ const StylesNavigation = observer(
                 <FlexLayoutContainer
                     model={this.context.layoutModels.styles}
                     factory={this.factory}
+                    onRenderTab={LayoutModels.translateTabName}
                 />
             );
         }

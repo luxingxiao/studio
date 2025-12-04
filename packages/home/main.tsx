@@ -9,6 +9,9 @@ import { observer } from "mobx-react";
 import { loadExtensions } from "eez-studio-shared/extensions/extensions";
 import { getNodeModuleFolders } from "eez-studio-shared/extensions/yarn";
 
+// Initialize i18n before other imports that may use translations
+import "eez-studio-shared/i18n";
+
 import * as notification from "eez-studio-ui/notification";
 import { showAboutBox } from "eez-studio-ui/about-box";
 

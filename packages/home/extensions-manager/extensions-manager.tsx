@@ -17,6 +17,7 @@ var sha256 = require("sha256");
 
 import { compareVersions, studioVersion } from "eez-studio-shared/util";
 import { humanize } from "eez-studio-shared/string";
+import { t as translate } from "eez-studio-shared/i18n";
 
 import {
     ExtensionType,
@@ -563,6 +564,11 @@ Click 'Cancel' to stop the installation.`;
 
 const BUTTONS = ["OK", "Cancel"];
 
+// Helper function for extensions namespace translations
+function tExt(key: string, options?: Record<string, unknown>) {
+    return translate(`extensions:${key}`, options);
+}
+
 export const MasterView = observer(
     class MasterView extends React.Component {
         render() {
@@ -734,9 +740,10 @@ export function downloadAndInstallExtension(
     return new Promise<IExtension | undefined>(async (resolve, reject) => {
         if (extensionToInstall.extensionType == "pext") {
             progress.update(progressId, {
-                render: `Installing extension ${
-                    extensionToInstall.displayName || extensionToInstall.name
-                }@${extensionToInstall.version} ...`,
+                render: tExt('notifications.installingExtension', {
+                    name: extensionToInstall.displayName || extensionToInstall.name,
+                    version: extensionToInstall.version
+                }),
                 type: notification.INFO
             });
 
@@ -754,10 +761,10 @@ export function downloadAndInstallExtension(
                 );
 
                 progress.update(progressId, {
-                    render: `Extension ${
-                        extensionToInstall.displayName ||
-                        extensionToInstall.name
-                    }@${extensionToInstall.version} has been installed.`,
+                    render: tExt('notifications.extensionInstalled', {
+                        name: extensionToInstall.displayName || extensionToInstall.name,
+                        version: extensionToInstall.version
+                    }),
                     type: notification.INFO,
                     autoClose: 5000
                 });
@@ -765,10 +772,11 @@ export function downloadAndInstallExtension(
                 resolve(extension);
             } catch (err) {
                 progress.update(progressId, {
-                    render: `Failed to install ${
-                        extensionToInstall.displayName ||
-                        extensionToInstall.name
-                    }@${extensionToInstall.version} extension: ${err}`,
+                    render: tExt('notifications.failedToInstall', {
+                        name: extensionToInstall.displayName || extensionToInstall.name,
+                        version: extensionToInstall.version,
+                        error: err
+                    }),
                     type: notification.ERROR,
                     autoClose: 5000
                 });
@@ -781,18 +789,19 @@ export function downloadAndInstallExtension(
             req.open("GET", extensionToInstall.download!);
 
             progress.update(progressId, {
-                render: `Downloading "${
-                    extensionToInstall.displayName || extensionToInstall.name
-                }" extension package ...`,
+                render: tExt('notifications.downloading', {
+                    name: extensionToInstall.displayName || extensionToInstall.name
+                }),
                 type: notification.INFO
             });
 
             req.addEventListener("progress", event => {
                 progress.update(progressId, {
-                    render: `Downloading "${
-                        extensionToInstall.displayName ||
-                        extensionToInstall.name
-                    }" extension package: ${event.loaded} of ${event.total}.`,
+                    render: tExt('notifications.downloadingProgress', {
+                        name: extensionToInstall.displayName || extensionToInstall.name,
+                        loaded: event.loaded,
+                        total: event.total
+                    }),
                     type: notification.INFO
                 });
             });
@@ -806,10 +815,9 @@ export function downloadAndInstallExtension(
                         extensionToInstall.sha256
                     ) {
                         progress.update(progressId, {
-                            render: `Failed to install "${
-                                extensionToInstall.displayName ||
-                                extensionToInstall.name
-                            }" extension because package file hash doesn't match.`,
+                            render: tExt('notifications.hashMismatch', {
+                                name: extensionToInstall.displayName || extensionToInstall.name
+                            }),
                             type: notification.ERROR,
                             autoClose: 5000
                         });
@@ -822,18 +830,17 @@ export function downloadAndInstallExtension(
                     .then(extension => {
                         if (extension) {
                             progress.update(progressId, {
-                                render: `Extension "${
-                                    extension.displayName || extension.name
-                                }" installed.`,
+                                render: tExt('notifications.extensionInstalledSimple', {
+                                    name: extension.displayName || extension.name
+                                }),
                                 type: notification.SUCCESS,
                                 autoClose: 5000
                             });
                         } else {
                             progress.update(progressId, {
-                                render: `Failed to install "${
-                                    extensionToInstall.displayName ||
-                                    extensionToInstall.name
-                                }" extension.`,
+                                render: tExt('notifications.failedToInstallSimple', {
+                                    name: extensionToInstall.displayName || extensionToInstall.name
+                                }),
                                 type: notification.ERROR,
                                 autoClose: 5000
                             });
@@ -843,10 +850,9 @@ export function downloadAndInstallExtension(
                     .catch(error => {
                         console.error("Extension download error", error);
                         progress.update(progressId, {
-                            render: `Failed to install "${
-                                extensionToInstall.displayName ||
-                                extensionToInstall.name
-                            }" extension.`,
+                            render: tExt('notifications.failedToInstallSimple', {
+                                name: extensionToInstall.displayName || extensionToInstall.name
+                            }),
                             type: notification.ERROR,
                             autoClose: 5000
                         });
@@ -857,10 +863,9 @@ export function downloadAndInstallExtension(
             req.addEventListener("error", error => {
                 console.error("Extension download error", error);
                 progress.update(progressId, {
-                    render: `Failed to download "${
-                        extensionToInstall.displayName ||
-                        extensionToInstall.name
-                    }" extension package.`,
+                    render: tExt('notifications.failedToDownload', {
+                        name: extensionToInstall.displayName || extensionToInstall.name
+                    }),
                     type: notification.ERROR,
                     autoClose: 5000
                 });
@@ -977,7 +982,7 @@ export const DetailsView = observer(
                 }
             }
 
-            const progressToastId = notification.info("Updating...", {
+            const progressToastId = notification.info(tExt('notifications.updating'), {
                 autoClose: false
             });
             await new Promise(resolve => setTimeout(resolve, 500));
@@ -1002,7 +1007,7 @@ export const DetailsView = observer(
                 return;
             }
 
-            confirm("Are you sure?", undefined, async () => {
+            confirm(tExt('dialogs.confirmUninstall'), undefined, async () => {
                 try {
                     await uninstallExtension(extension.id);
                     notification.success(
@@ -1033,8 +1038,8 @@ export const DetailsView = observer(
 
             const result = await dialog.showSaveDialog(getCurrentWindow(), {
                 filters: [
-                    { name: "Extension files", extensions: ["zip"] },
-                    { name: "All Files", extensions: ["*"] }
+                    { name: tExt('fileFilter.extensions'), extensions: ["zip"] },
+                    { name: tExt('fileFilter.allFiles'), extensions: ["*"] }
                 ],
                 defaultPath: getValidFileNameFromFileName(
                     extension.name + ".zip"
@@ -1051,7 +1056,7 @@ export const DetailsView = observer(
                     const tempFilePath = await getTempFilePath();
                     await exportExtension(extension, tempFilePath);
                     await copyFile(tempFilePath, filePath);
-                    notification.success(`Saved to "${filePath}"`);
+                    notification.success(tExt('notifications.savedTo', { path: filePath }));
                 } catch (err) {
                     notification.error(err.toString());
                 }
@@ -1136,7 +1141,7 @@ export const DetailsView = observer(
                                         style={{ cursor: "pointer" }}
                                         onClick={this.handleChangeImage}
                                     >
-                                        Change image
+                                        {tExt('labels.changeImage')}
                                     </a>
                                 )}
                         </div>
@@ -1150,7 +1155,7 @@ export const DetailsView = observer(
                                         className="my-1 me-2"
                                         htmlFor="EezStudio_Extension_Details_VersionSelect"
                                     >
-                                        Versions:
+                                        {tExt('labels.versions')}
                                     </label>
                                     <select
                                         id="EezStudio_Extension_Details_VersionSelect"
@@ -1188,40 +1193,40 @@ export const DetailsView = observer(
                             <Toolbar>
                                 {this.installEnabled && (
                                     <ButtonAction
-                                        text="Install"
-                                        title="Install extension"
+                                        text={tExt('buttons.install')}
+                                        title={tExt('buttons.install')}
                                         className="btn-success"
                                         onClick={this.handleInstall}
                                     />
                                 )}
                                 {this.updateEnabled && (
                                     <ButtonAction
-                                        text="Update"
-                                        title="Update extension to the latest version"
+                                        text={tExt('buttons.update')}
+                                        title={tExt('buttons.update')}
                                         className="btn-success"
                                         onClick={this.handleInstall}
                                     />
                                 )}
                                 {this.replaceEnabled && (
                                     <ButtonAction
-                                        text="Replace"
-                                        title="Replace installed extension with selected version"
+                                        text={tExt('buttons.replace')}
+                                        title={tExt('buttons.replace')}
                                         className="btn-success"
                                         onClick={this.handleInstall}
                                     />
                                 )}
                                 {this.uninstallEnabled && (
                                     <ButtonAction
-                                        text="Uninstall"
-                                        title="Uninstall extension"
+                                        text={tExt('buttons.uninstall')}
+                                        title={tExt('buttons.uninstall')}
                                         className="btn-danger"
                                         onClick={this.handleUninstall}
                                     />
                                 )}
                                 {extension.isEditable && extension.isDirty && (
                                     <ButtonAction
-                                        text="Export"
-                                        title="Export extension"
+                                        text={tExt('buttons.export')}
+                                        title={tExt('buttons.export')}
                                         className="btn-secondary"
                                         onClick={this.handleExport}
                                     />
@@ -1254,8 +1259,8 @@ const ExtensionsManagerSubNavigation = observer(
             const result = await dialog.showOpenDialog(getCurrentWindow(), {
                 properties: ["openFile"],
                 filters: [
-                    { name: "Extensions", extensions: ["zip"] },
-                    { name: "All Files", extensions: ["*"] }
+                    { name: tExt('fileFilter.extensions'), extensions: ["zip"] },
+                    { name: tExt('fileFilter.allFiles'), extensions: ["*"] }
                 ]
             });
 
@@ -1267,7 +1272,7 @@ const ExtensionsManagerSubNavigation = observer(
                     const extension = await installExtension(filePath, {
                         notFound() {
                             info(
-                                "This is not a valid extension package file.",
+                                tExt('notifications.notValidPackage'),
                                 undefined
                             );
                         },
@@ -1278,7 +1283,7 @@ const ExtensionsManagerSubNavigation = observer(
                             return (
                                 (await confirmWithButtons(
                                     confirmMessage(newExtension),
-                                    `The newer version ${existingExtension.version} is already installed.${BUTTON_INSTRUCTIONS}`,
+                                    tExt('notifications.newerVersionInstalled', { version: existingExtension.version }) + BUTTON_INSTRUCTIONS,
                                     BUTTONS
                                 )) === 0
                             );
@@ -1290,7 +1295,7 @@ const ExtensionsManagerSubNavigation = observer(
                             return (
                                 (await confirmWithButtons(
                                     confirmMessage(newExtension),
-                                    `The older version ${existingExtension.version} is already installed.${BUTTON_INSTRUCTIONS}`,
+                                    tExt('notifications.olderVersionInstalled', { version: existingExtension.version }) + BUTTON_INSTRUCTIONS,
                                     BUTTONS
                                 )) === 0
                             );
@@ -1302,7 +1307,7 @@ const ExtensionsManagerSubNavigation = observer(
                             return (
                                 (await confirmWithButtons(
                                     confirmMessage(newExtension),
-                                    `That version is already installed.${BUTTON_INSTRUCTIONS}`,
+                                    tExt('notifications.sameVersionInstalled') + BUTTON_INSTRUCTIONS,
                                     BUTTONS
                                 )) === 0
                             );
@@ -1311,9 +1316,9 @@ const ExtensionsManagerSubNavigation = observer(
 
                     if (extension) {
                         notification.success(
-                            `Extension "${
-                                extension.displayName || extension.name
-                            }" installed`
+                            tExt('notifications.extensionInstalledSimple', {
+                                name: extension.displayName || extension.name
+                            })
                         );
 
                         extensionsManagerStore.selectExtensionById(
@@ -1334,14 +1339,14 @@ const ExtensionsManagerSubNavigation = observer(
             if (result.filePaths && result.filePaths[0]) {
                 const folderPath = result.filePaths[0];
 
-                const progressToastId = notification.info("Updating...", {
+                const progressToastId = notification.info(tExt('notifications.updating'), {
                     autoClose: false
                 });
                 await new Promise(resolve => setTimeout(resolve, 500));
 
                 try {
                     notification.update(progressToastId, {
-                        render: `Installing extension from ${folderPath} ...`,
+                        render: tExt('notifications.installingFromFolder', { folder: folderPath }),
                         type: notification.INFO
                     });
 
@@ -1370,14 +1375,14 @@ const ExtensionsManagerSubNavigation = observer(
                     }
 
                     notification.update(progressToastId, {
-                        render: `Extension from ${folderPath} has been installed.`,
+                        render: tExt('notifications.extensionFromFolderInstalled', { folder: folderPath }),
                         type: notification.INFO,
                         autoClose: 5000
                     });
                 } catch (err) {
                     console.error(err);
                     notification.update(progressToastId, {
-                        render: `Failed to install extension from ${folderPath}: ${err}`,
+                        render: tExt('notifications.failedToInstallFromFolder', { folder: folderPath, error: err }),
                         type: notification.ERROR,
                         autoClose: 5000
                     });
@@ -1400,7 +1405,7 @@ const ExtensionsManagerSubNavigation = observer(
                         )!.latestVersion
                 );
 
-            const progressToastId = notification.info("Updating...", {
+            const progressToastId = notification.info(tExt('notifications.updating'), {
                 autoClose: false
             });
             await new Promise(resolve => setTimeout(resolve, 500));
@@ -1413,7 +1418,7 @@ const ExtensionsManagerSubNavigation = observer(
             }
 
             notification.update(progressToastId, {
-                render: "All extensions successfully updated!",
+                render: tExt('notifications.allExtensionsUpdated'),
                 type: notification.SUCCESS,
                 autoClose: 5000
             });
@@ -1445,7 +1450,7 @@ const ExtensionsManagerSubNavigation = observer(
                                     })}
                                 >
                                     <Count
-                                        label={"All"}
+                                        label={tExt('filter.all')}
                                         count={
                                             extensionsManagerStore.all.length
                                         }
@@ -1471,7 +1476,7 @@ const ExtensionsManagerSubNavigation = observer(
                                         })}
                                     >
                                         <Count
-                                            label={"Installed"}
+                                            label={tExt('filter.installed')}
                                             count={
                                                 extensionsManagerStore.installed
                                                     .length
@@ -1499,7 +1504,7 @@ const ExtensionsManagerSubNavigation = observer(
                                         })}
                                     >
                                         <Count
-                                            label={"Not installed"}
+                                            label={tExt('filter.notInstalled')}
                                             count={
                                                 extensionsManagerStore
                                                     .notInstalled.length
@@ -1527,7 +1532,7 @@ const ExtensionsManagerSubNavigation = observer(
                                         })}
                                     >
                                         <Count
-                                            label={"New versions"}
+                                            label={tExt('filter.newVersions')}
                                             count={
                                                 extensionsManagerStore
                                                     .newVersions.length
@@ -1546,7 +1551,7 @@ const ExtensionsManagerSubNavigation = observer(
                     <div>
                         {
                             <ButtonAction
-                                text="Update All"
+                                text={tExt('buttons.updateAll')}
                                 title=""
                                 className="btn-success"
                                 onClick={this.updateAll}
@@ -1564,25 +1569,25 @@ const ExtensionsManagerSubNavigation = observer(
                         }
                         <DropdownIconAction
                             icon="material:menu"
-                            title="Actions"
+                            title={tExt('labels.actions')}
                         >
                             <DropdownItem
-                                text="Update Catalog"
+                                text={tExt('buttons.updateCatalog')}
                                 onClick={this.updateCatalog}
                             />
                             {(extensionsManagerStore.section == "iext" ||
                                 extensionsManagerStore.section ==
                                     "measurement-functions") && (
                                 <DropdownItem
-                                    text="Install Extension"
-                                    title="Install extension from local file"
+                                    text={tExt('buttons.installExtension')}
+                                    title={tExt('dialogs.installExtensionFromFile')}
                                     onClick={this.installExtensionFromFile}
                                 />
                             )}
                             {extensionsManagerStore.section == "pext" && (
                                 <DropdownItem
-                                    text="Install Extension"
-                                    title="Install extension from local folder"
+                                    text={tExt('buttons.installExtension')}
+                                    title={tExt('dialogs.installExtensionFromFolder')}
                                     onClick={this.installExtensionFromFolder}
                                 />
                             )}
@@ -1616,7 +1621,7 @@ export const ExtensionsList = observer(
             if (extensionsManagerStore.extensionNodes.length === 0) {
                 return (
                     <div className="EezStudio_ExtensionsManager_NoExtensions">
-                        No extension found
+                        {tExt('labels.noExtensionFound')}
                     </div>
                 );
             }
@@ -1660,7 +1665,7 @@ export const ExtensionsManager = observer(
                             }
                         >
                             <Count
-                                label="Project Editor Extensions"
+                                label={tExt('navigation.projectEditorExtensions')}
                                 count={
                                     extensionsManagerStore.searchText
                                         ? extensionsManagerStore.extensionsVersionsCatalogBuilder.get(
@@ -1692,7 +1697,7 @@ export const ExtensionsManager = observer(
                             }
                         >
                             <Count
-                                label="Instrument Extensions"
+                                label={tExt('navigation.instrumentExtensions')}
                                 count={
                                     extensionsManagerStore.searchText
                                         ? extensionsManagerStore.extensionsVersionsCatalogBuilder.get(
@@ -1725,7 +1730,7 @@ export const ExtensionsManager = observer(
                             }
                         >
                             <Count
-                                label="Measurement Extensions"
+                                label={tExt('navigation.measurementExtensions')}
                                 count={
                                     extensionsManagerStore.searchText
                                         ? extensionsManagerStore.extensionsVersionsCatalogBuilder.get(
@@ -1759,7 +1764,7 @@ export const ExtensionsManager = observer(
                             </>
                         ) : (
                             <div className="EezStudio_ExtensionsManager_NoExtensions">
-                                No extension found
+                                {tExt('labels.noExtensionFound')}
                             </div>
                         )}
                     </div>

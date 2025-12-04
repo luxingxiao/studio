@@ -78,11 +78,17 @@ import {
     type Color,
     getProjectWithThemes
 } from "project-editor/features/style/theme";
+import { t as translate } from "eez-studio-shared/i18n";
 
 ////////////////////////////////////////////////////////////////////////////////
 
-const NOT_COMPATIBLE_WITH_PROJECT_TYPE =
-    "Not compatible with this project type, will be skipped.";
+// Helper function for projectEditor namespace translations
+function tPaste(key: string, options?: Record<string, unknown>) {
+    return translate(`projectEditor:paste.${key}`, options);
+}
+
+const NOT_COMPATIBLE_WITH_PROJECT_TYPE = () =>
+    tPaste("notCompatible");
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -840,7 +846,7 @@ class PasteWithDependenciesModel {
             ) {
                 return {
                     kind: "not-compatible",
-                    message: NOT_COMPATIBLE_WITH_PROJECT_TYPE
+                    message: NOT_COMPATIBLE_WITH_PROJECT_TYPE()
                 };
             }
 
@@ -915,7 +921,7 @@ class PasteWithDependenciesModel {
             ) {
                 return {
                     kind: "not-compatible",
-                    message: NOT_COMPATIBLE_WITH_PROJECT_TYPE
+                    message: NOT_COMPATIBLE_WITH_PROJECT_TYPE()
                 };
             }
 
@@ -946,7 +952,7 @@ class PasteWithDependenciesModel {
             ) {
                 return {
                     kind: "not-compatible",
-                    message: NOT_COMPATIBLE_WITH_PROJECT_TYPE
+                    message: NOT_COMPATIBLE_WITH_PROJECT_TYPE()
                 };
             }
         }
@@ -1493,21 +1499,21 @@ export const ResolvePasteConflictsDialog = observer(
             return (
                 <Dialog
                     modal={false}
-                    okButtonText="Paste"
+                    okButtonText={tPaste("pasteButton")}
                     okEnabled={this.onOkEnabled}
                     onOk={this.onOk}
                     onCancel={this.props.onCancel}
                 >
                     <div className="EezStudio_ResolvePasteConflictsDialog">
                         {posteObjectsWithConflicts.length == 0 ? (
-                            "No conflicts found."
+                            tPaste("noConflictsFound")
                         ) : (
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Object Type</th>
-                                        <th>Object Name</th>
-                                        <th>Conflict Resolution</th>
+                                        <th>{tPaste("objectType")}</th>
+                                        <th>{tPaste("objectName")}</th>
+                                        <th>{tPaste("conflictResolution")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1532,11 +1538,11 @@ export const ResolvePasteConflictsDialog = observer(
                                                 : classInfo.icon;
 
                                             let objectType = isUserWidget
-                                                ? "User Widget"
+                                                ? tPaste("userWidget")
                                                 : isFlowFragment
-                                                ? "Flow Fragment"
+                                                ? tPaste("flowFragment")
                                                 : pasteObject.isLocalVariable
-                                                ? "Local Variable"
+                                                ? tPaste("localVariable")
                                                 : getClass(object).name;
 
                                             return (
@@ -1598,9 +1604,9 @@ const ConflictResolution = observer(
             const { pasteObject } = this.props;
 
             if (pasteObject.conflict.kind == "doesnt-exists") {
-                return "No conflict - Doesn't exists.";
+                return tPaste("noConflictDoesntExist");
             } else if (pasteObject.conflict.kind == "exists-same") {
-                return "No conflict - Exists, but same.";
+                return tPaste("noConflictExistsSame");
             } else if (pasteObject.conflict.kind == "not-compatible") {
                 return pasteObject.conflict.message;
             }
@@ -1616,12 +1622,12 @@ const ConflictResolution = observer(
                                     .value as any)
                         )}
                     >
-                        <option value="rename-source">Rename source</option>
+                        <option value="rename-source">{tPaste("renameSource")}</option>
                         <option value="rename-destination">
-                            Rename destination
+                            {tPaste("renameDestination")}
                         </option>
-                        <option value="replace">Replace</option>
-                        <option value="keep">Keep</option>
+                        <option value="replace">{tPaste("replace")}</option>
+                        <option value="keep">{tPaste("keep")}</option>
                     </select>
                     {(pasteObject.conflictResolution == "rename-source" ||
                         pasteObject.conflictResolution ==
@@ -1635,7 +1641,7 @@ const ConflictResolution = observer(
                                     (pasteObject.conflictResolutionName =
                                         event.target.value)
                             )}
-                            placeholder="Name"
+                            placeholder={tPaste("namePlaceholder")}
                         ></input>
                     )}
                     {pasteObject.conflictResolutionError && (
@@ -1752,7 +1758,7 @@ const FindAllPasteDependenciesProgressDialog = observer(
                 >
                     <div className="EezStudio_FindAllPasteDependenciesProgressDialog">
                         <div>
-                            <div>Searching for dependencies ...</div>
+                            <div>{tPaste("searchingForDependencies")}</div>
                             <Loader />
                         </div>
                     </div>

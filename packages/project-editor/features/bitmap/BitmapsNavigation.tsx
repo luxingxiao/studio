@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import * as FlexLayout from "flexlayout-react";
 import { ListNavigation } from "project-editor/ui-components/ListNavigation";
 import { FlexLayoutContainer } from "eez-studio-ui/FlexLayout";
-import { isObjectExists } from "project-editor/store";
+import { isObjectExists, LayoutModels } from "project-editor/store";
 import { ProjectContext } from "project-editor/project/context";
 import { Bitmap, createBitmapFromFile } from "./bitmap";
 
@@ -84,6 +84,7 @@ export const BitmapsTab = observer(
                 <FlexLayoutContainer
                     model={this.context.layoutModels.bitmaps}
                     factory={this.factory}
+                    onRenderTab={LayoutModels.translateTabName}
                 />
             );
         }
